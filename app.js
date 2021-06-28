@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
-const adminRoutes = require('./routes/admin');
+const adminData = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 
 // convert express requests to json
@@ -14,14 +14,15 @@ app.use(express.urlencoded({
   extended: true
 }));
 
-// express.static(root, [options])
+// express.static(root, [options]) -- grants access to these dependencies
 // Note (from docs) that you can designate multiple static assets directories: https://expressjs.com/en/starter/static-files.html
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/css', express.static(path.join(__dirname, "node_modules/bootstrap/dist/css")));
 app.use('/js', express.static(path.join(__dirname, "node_modules/bootstrap/dist/js")));
 
 // outsource routes
-app.use('/admin', adminRoutes);
+// app.use('/admin', adminRoutes);
+app.use('/admin', adminData.routes);
 app.use(shopRoutes);
 
 // Handle 404
