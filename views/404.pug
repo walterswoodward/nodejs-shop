@@ -1,0 +1,19 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  meta(http-equiv='X-UA-Compatible' content='ie=edge')
+  title #{docTitle}
+  link(rel='stylesheet' href='/css/bootstrap.min.css')
+header
+  nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
+    .container-fluid
+      a.navbar-brand(href='/') NodeJS Shop
+      button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#navbarNavAltMarkup' aria-controls='navbarNavAltMarkup' aria-expanded='false' aria-label='Toggle navigation')
+        span.navbar-toggler-icon
+      #navbarNavAltMarkup.collapse.navbar-collapse
+        .navbar-nav
+          a.nav-link.active(href='/') Shop
+          a.nav-link(href='/admin/add-product') Add Product
+main.m-3
+    h1 Page Not Found!
