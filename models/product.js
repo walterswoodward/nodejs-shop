@@ -22,7 +22,7 @@ module.exports = class Product {
 
     save() {
         getProductsFromFile((products) => {
-            products.push(this); // note that 'this' refers to the containing class only b/c it is inside of an arrow function
+            products.unshift(this); // note that 'this' refers to the containing class only b/c it is inside of an arrow function
             fs.writeFile(p, JSON.stringify(products), (err) => console.log(err));
         });
     }
