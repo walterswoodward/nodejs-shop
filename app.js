@@ -10,6 +10,7 @@ app.set('views', 'views'); // views is the default so this isn't necessary, but 
 
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
+const { get404 } = require('./controllers/error');
 
 // convert express requests to json
 app.use(express.json());
@@ -29,9 +30,6 @@ app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 
 // Handle 404
-app.use((req, res, next) => {
-    // res.status(404).sendFile(path.join(__dirname, 'views', '404.html'));
-    res.status(404).render('404', {pageTitle: 'Page Not Found'});
-})
+app.use(get404)
 
 app.listen(3000);
