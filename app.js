@@ -5,6 +5,9 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
+app.set('view engine', 'pug'); // pug supports this syntax out of the box
+app.set('views', 'views'); // views is the default so this isn't necessary, but just to be explicit -- find pug templates in views/
+
 const adminData = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 

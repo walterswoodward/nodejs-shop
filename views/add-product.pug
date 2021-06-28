@@ -1,0 +1,23 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  meta(http-equiv='X-UA-Compatible' content='ie=edge')
+  title Add Product
+  link(rel='stylesheet' href='/css/bootstrap.min.css')
+header
+  nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
+    .container-fluid
+      a.navbar-brand(href='/') NodeJS Shop
+      button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#navbarNavAltMarkup' aria-controls='navbarNavAltMarkup' aria-expanded='false' aria-label='Toggle navigation')
+        span.navbar-toggler-icon
+      #navbarNavAltMarkup.collapse.navbar-collapse
+        .navbar-nav
+          a.nav-link(href='/') Shop
+          a.nav-link.active(href='/admin/add-product') Add Product
+main.m-3
+  form(action='/admin/add-product' method='POST')
+    .form-group
+      label.mb-3(for='exampleInputEmail1') Title
+      input.form-control.mb-3(type='text' placeholder='Enter title' name='title')
+    button.btn.btn-primary(type='submit') Add Product
