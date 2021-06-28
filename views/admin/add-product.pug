@@ -4,6 +4,16 @@ block styles
 block content
     main.m-3
         form(action='/admin/add-product' method='POST').form-group
-            label.mb-3(for='exampleInputEmail1') Title
-            input.form-control.mb-3(type='text' placeholder='Enter title' name='title')
+            .mb-3
+                label(for='title') Title
+                input#title.form-control.mb-3(type='text' placeholder='Enter title' name='title')
+            .mb-3
+                label.mb-3(for='imageUrl') Image URL
+                input#imageUrl.form-control.mb-3(type='text' placeholder='Enter title' name='imageUrl')
+            .mb-3
+                label.mb-3(for='price') Price
+                input#price.form-control.mb-3(type='number' min='1' step='any' placeholder='Enter Price' name='price')
+            .mb-3
+                label.mb-3(for='description') Description
+                textarea#description.form-control.mb-3(rows='5' placeholder='Enter Description' name='description')
             button.btn.btn-primary(type='submit') Add Product

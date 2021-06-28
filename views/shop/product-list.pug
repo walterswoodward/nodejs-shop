@@ -5,17 +5,19 @@ block styles
 block content
     main.m-3
         if hasProducts
-            .row.row-cols-1.row-cols-md-4.g-4
+            .row.row-cols-1.row-cols-md-6.g-4
                 each product in prods
                     .col
                         span.card.mb-3
-                            img.card-img-top(src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtfcsJm7Qsd7mblIQo4VLuPN6CfFc70mySwQ&usqp=CAU' alt='Card image cap')
+                            img.card-img-top(src=product.imageUrl alt=product.title)
                             .card-body
                                 h5.card-title #{product.title}
-                                h6.product__price $19.99
-                                p.card-text.product__description
-                                | A nice book for you to read in the shade of a palm tree on the beach.
+                                h6.product__price $#{product.price}
+                                p.card-text.product__description #{product.description}
                                 hr
-                                button.btn.btn-danger(href='#') Add to Cart
+                                button.btn.btn-secondary(href='/admin/edit-product') Edit
+                                form(action="/admin/delete-product" method="POST")
+                                    button.btn.btn-danger(href='#') Delete
         else
             h1 No Products
+
