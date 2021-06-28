@@ -12,7 +12,7 @@ router.get('/add-product', (req, res) => {
     // Render HTML file directly:
     // res.sendFile(path.join(rootDir, 'views', 'add-product.html'));
     // PUG
-    res.render('add-product', {prod: products});
+    res.render('add-product', {pageTitle: 'Add Product', path: '/admin/add-product'});
 
 });
 

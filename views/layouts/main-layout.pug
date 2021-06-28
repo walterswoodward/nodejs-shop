@@ -1,0 +1,20 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  meta(http-equiv='X-UA-Compatible' content='ie=edge')
+  title #{pageTitle}
+  link(rel='stylesheet' href='/css/bootstrap.min.css')
+  link(rel="stylesheet", href='/js/bootstrap.min.js')
+  block styles
+header
+  nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
+    .container-fluid
+      a.navbar-brand(href='/') NodeJS Shop
+      button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#navbarNavAltMarkup' aria-controls='navbarNavAltMarkup' aria-expanded='false' aria-label='Toggle navigation')
+        span.navbar-toggler-icon
+      #navbarNavAltMarkup.collapse.navbar-collapse
+        .navbar-nav
+          a.nav-link(href='/', class=(path === "/" ? 'active' : '')) Shop
+          a.nav-link(href='/admin/add-product', class=(path === "/admin/add-product" ? 'active' : '')) Add Product
+block content
