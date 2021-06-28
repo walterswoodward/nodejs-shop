@@ -4,7 +4,7 @@ block styles
     link(rel='stylesheet' href='/css/bootstrap.min.css')
 block content
     main.m-3
-        if prods.length > 0
+        if hasProducts
             .card-group
                 each product in prods
                     span.card(style='max-width: 285px;')

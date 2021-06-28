@@ -15,6 +15,6 @@ header
         span.navbar-toggler-icon
       #navbarNavAltMarkup.collapse.navbar-collapse
         .navbar-nav
-          a.nav-link(href='/', class=(path === "/" ? 'active' : '')) Shop
-          a.nav-link(href='/admin/add-product', class=(path === "/admin/add-product" ? 'active' : '')) Add Product
+          a.nav-link(href='/', class=(activeShop ? 'active' : '')) Shop
+          a.nav-link(href='/admin/add-product', class=(activeAddProduct ? 'active' : '')) Add Product
 block content

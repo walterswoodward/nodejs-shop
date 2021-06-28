@@ -8,7 +8,7 @@ const app = express();
 app.set('view engine', 'pug'); // pug supports this syntax out of the box
 app.set('views', 'views'); // views is the default so this isn't necessary, but just to be explicit -- find pug templates in views/
 
-const adminData = require('./routes/admin');
+const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 
 // convert express requests to json
@@ -25,7 +25,7 @@ app.use('/js', express.static(path.join(__dirname, "node_modules/bootstrap/dist/
 
 // outsource routes
 // app.use('/admin', adminRoutes);
-app.use('/admin', adminData.routes);
+app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 
 // Handle 404
