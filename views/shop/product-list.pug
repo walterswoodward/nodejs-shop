@@ -15,9 +15,7 @@ block content
                                 h6.product__price $#{product.price}
                                 p.card-text.product__description #{product.description}
                                 hr
-                                button.btn.btn-secondary(href='/admin/edit-product') Edit
-                                form(action="/admin/delete-product" method="POST")
-                                    button.btn.btn-danger(href='#') Delete
+                                a.btn.btn-warning(href='/products/' + product.id) Details
+                                include ../includes/add-to-cart.pug
         else
             h1 No Products
-

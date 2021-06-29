@@ -1,5 +1,5 @@
 const express = require('express');
-const { getProducts, getIndex, getCart, getCheckout, getOrders } = require('../controllers/shop');
+const { getProducts, getIndex, getCart, getCheckout, getOrders, getProduct, postCart } = require('../controllers/shop');
 
 const router = express.Router();
 
@@ -8,7 +8,12 @@ router.get('/', getIndex);
 
 router.get('/products', getProducts);
 
+// note: all dynamic segments need to be beneath all specific routes
+router.get('/products/:productId', getProduct);
+
 router.get('/cart', getCart);
+
+router.post('/cart', postCart);
 
 router.get('/orders', getOrders);
 
