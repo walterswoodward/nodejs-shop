@@ -7,9 +7,7 @@ exports.getIndex = (req, res, next) => {
         prods: products, 
         pageTitle: 'Shop',
         path: '/',
-        hasProducts: products.length > 0,
-        activeIndex: true,
-        bootstrapCSS: true
+        hasProducts: products.length > 0
     }));
 }
 
@@ -27,9 +25,7 @@ exports.getProducts = (req, res, next) => {
         prods: products, 
         pageTitle: 'All Products',
         path: '/products',
-        hasProducts: products.length > 0,
-        activeShop: true,
-        bootstrapCSS: true
+        hasProducts: products.length > 0
     }));
 }
 

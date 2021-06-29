@@ -3,9 +3,7 @@ const Product = require('../models/product');
 exports.getAddProduct = (req, res) => {
     res.render('admin/edit-product', {
         pageTitle: 'Add Product', 
-        path: '/admin/add-product',
-        bootstrapCSS: true,
-        activeAddProduct: true
+        path: '/admin/add-product'
     });
 }
 
@@ -14,9 +12,7 @@ exports.getProducts = (req, res, next) => {
         prods: products, 
         pageTitle: 'Admin Products',
         path: '/admin/products',
-        hasProducts: products.length > 0,
-        activeProducts: true,
-        bootstrapCSS: true
+        hasProducts: products.length > 0
     }));
 }
 
