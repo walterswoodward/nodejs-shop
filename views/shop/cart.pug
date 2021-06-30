@@ -3,5 +3,23 @@ extends ../layouts/main-layout.pug
 block styles
     link(rel='stylesheet' href='/css/bootstrap.min.css')
 block content
-    .main
-    | CART
+    .main.g-4
+    h3 Shopping Cart
+    //- TODO: Add Deselect Items Feature
+    //- a(href="#") Deselect Items
+    //- input(type="checkbox", name="product")
+
+    if products.length  > 0
+        ul.container
+            each p in products
+                li.row.dflex
+                    #image.col
+                        img(src=p.productData.imageUrl, alt=p.productData.title)
+                    #title.col= p.productData.title
+                    #qty.col= "Qty: " + p.qty
+                    .col
+                        form(action="/cart-delete-item" method="POST")
+                            button.btn.btn-primary(tpye="submit") Delete
+                            input(type='hidden' name='productId' value=p.productData.id)
+    else
+        h1 No Products in Cart
