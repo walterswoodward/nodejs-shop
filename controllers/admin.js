@@ -2,7 +2,7 @@ const Product = require('../models/product');
 
 exports.getAddProduct = (req, res) => {
     res.render('admin/edit-product', {
-        pageTitle: 'Add Product', 
+        pageTitle: 'Add Product',
         path: '/admin/add-product',
         editing: false // this isn't really necessary
     });
@@ -20,7 +20,7 @@ exports.getEditProduct = (req, res) => {
             return res.redirect('/');
         }
         res.render('admin/edit-product', {
-            pageTitle: 'Edit Product', 
+            pageTitle: 'Edit Product',
             path: '/admin/edit-product',
             editing: editMode,
             product: product
@@ -30,7 +30,7 @@ exports.getEditProduct = (req, res) => {
 
 exports.getProducts = (req, res, next) => {
     Product.fetchAll((products) => res.render('admin/products', {
-        prods: products, 
+        prods: products,
         pageTitle: 'Admin Products',
         path: '/admin/products',
         hasProducts: products.length > 0
@@ -38,7 +38,7 @@ exports.getProducts = (req, res, next) => {
 }
 
 exports.postAddProduct = (req, res, next) => {
-    const {title, imageUrl, price, description} = req.body;
+    const { title, imageUrl, price, description } = req.body;
     const product = new Product(
         null,
         title,
@@ -52,7 +52,7 @@ exports.postAddProduct = (req, res, next) => {
 
 exports.postEditProduct = (req, res, next) => {
     const prodId = req.body.productId;
-    const {title, imageUrl, price, description} = req.body;
+    const { title, imageUrl, price, description } = req.body;
     const updatedProduct = new Product(
         prodId,
         title,
