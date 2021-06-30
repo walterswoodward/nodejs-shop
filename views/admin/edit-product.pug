@@ -3,17 +3,23 @@ block styles
     link(rel='stylesheet' href='/css/bootstrap.min.css')
 block content
     main.m-3
-        form(action='/admin/add-product' method='POST').form-group
+        form(action='/admin/' + (editing === 'true' ? 'edit' : 'add') + '-product' method='POST').form-group
             .mb-3
                 label(for='title') Title
-                input#title.form-control.mb-3(type='text' placeholder='Enter title' name='title')
+                input#title.form-control.mb-3(type='text' placeholder='Enter title' name='title' value=(editing === 'true' ? product.title : ''))
             .mb-3
                 label.mb-3(for='imageUrl') Image URL
-                input#imageUrl.form-control.mb-3(type='text' placeholder='Enter title' name='imageUrl')
+                input#imageUrl.form-control.mb-3(type='text' placeholder='Enter title' name='imageUrl' value=(editing === 'true' ? product.imageUrl : ''))
             .mb-3
                 label.mb-3(for='price') Price
-                input#price.form-control.mb-3(type='number' min='1' step='any' placeholder='Enter Price' name='price')
+                input#price.form-control.mb-3(type='number' min='1' step='any' placeholder='Enter Price' name='price' value=(editing === 'true' ? product.price : ''))
             .mb-3
                 label.mb-3(for='description') Description
-                textarea#description.form-control.mb-3(rows='5' placeholder='Enter Description' name='description')
-            button.btn.btn-primary(type='submit') Add Product
+                textarea#description.form-control.mb-3(rows='5' placeholder='Enter Description' name='description') #{editing === 'true' ? product.description : null}
+            button.btn.btn-primary(type='submit')
+                if editing === 'true'
+                    #update Update Product
+                else
+                    #add Add Product
+            if editing === 'true' 
+                input(type='hidden' name='productId' value=product.id)

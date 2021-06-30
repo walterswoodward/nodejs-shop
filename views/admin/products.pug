@@ -1,6 +1,24 @@
 extends ../layouts/main-layout.pug
 block styles
     link(rel='stylesheet' href='/css/bootstrap.min.css')
+    link(rel='stylesheet' href='/css/main.css')
 block content
-    div 
-    | ADMIN PRODUCTS
+    main.m-3
+        if hasProducts
+            .row.row-cols-1.row-cols-md-6.g-4
+                each product in prods
+                    .col
+                        span.card.mb-3
+                            img.card-img-top.card__image(src=product.imageUrl alt=product.title)
+                            .card-body
+                                h6.card-title #{product.title}
+                                div.product__price.text-medium $#{product.price}
+                                small.card-text.product__description #{product.description}
+                                hr
+                                a.btn.btn-success(href='/admin/edit-product/' + product.id + '?edit=true') Edit
+                                form(action="/admin/delete-product" method="POST")
+                                    button.btn.btn-danger(href='#') Delete
+                                    input(type='hidden' name='productId' value=product.id)
+                                include ../includes/add-to-cart.pug
+        else
+            h1 No Products
