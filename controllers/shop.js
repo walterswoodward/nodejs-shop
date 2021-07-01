@@ -3,46 +3,36 @@ const Cart = require('../models/cart');
 
 
 exports.getIndex = (_req, res, _next) => {
-    Product.fetchAll()
-    .then(([rows, _fieldData]) => {
+    Product.findAll().then(products => {
         res.render('shop/index', {
-            prods: rows,
+            prods: products,
             pageTitle: 'Shop',
             path: '/',
-            hasProducts: rows.length > 0
+            hasProducts: products.length > 0
         })
-        
-    })
-    .catch(err => {
-        console.log(err);
-    });
+    }).catch(err => console.log(err));
 }
 
 exports.getProduct = (req, res, _next) => {
     const prodId = req.params.productId;
-    Product.findById(prodId)
-        .then(([products]) => res.render('shop/product-detail', {
-            product: products[0],
-            pageTitle: products[0].title,
+    Product.findByPk(prodId) // alternatively Product.findByAll({where: {id: prodId}...}) could be used -- see sequelize docs
+        .then((product) => res.render('shop/product-detail', {
+            product: product,
+            pageTitle: product.title,
             path: '/products',
         }))
         .catch(err => console.log(err));
 }
 
 exports.getProducts = (_req, res, _next) => {
-    Product.fetchAll()
-    .then(([rows, _fieldData]) => {
+    Product.findAll().then(products => {
         res.render('shop/product-list', {
-            prods: rows,
+            prods: products,
             pageTitle: 'All Products',
             path: '/products',
-            hasProducts: rows.length > 0
+            hasProducts: products.length > 0
         })
-        
-    })
-    .catch(err => {
-        console.log(err);
-    });
+    }).catch(err => console.log(err));
 }
 
 exports.getCart = (_req, res, _index) => {
