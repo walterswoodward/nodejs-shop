@@ -1,34 +1,27 @@
-const db = require('../util/database');
+const Sequelize = require('sequelize');
 
-const Cart = require('./cart');
+const sequelize = require('../util/database');
 
-module.exports = class Product {
-    constructor(id, title, imageUrl, price, description) {
-        this.title = title;
-        this.imageUrl = imageUrl;
-        this.description = description;
-        this.price = price;
+const Product = sequelize.define('product', {
+    id: {
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
+        allowNull: false,
+        primaryKey: true
+    },
+    title: Sequelize.STRING,
+    price: {
+        type: Sequelize.DOUBLE,
+        allowNull: false
+    },
+    imageUrl: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    description: {
+        type: Sequelize.STRING,
+        allowNull: false
     }
+});
 
-    save() {
-        // Note question marks which guard against SQL Injection by letting mysql2 handle value injection 
-        return db.execute('INSERT INTO products (title, price, imageUrl, description) ' +
-            'VALUES (?, ?, ?, ?)',
-            [this.title, this.price, this.imageUrl, this.description]
-        );
-    }
-
-    static deleteById(id) {
-
-    }
-
-    static fetchAll() {
-        // Note how this model function simply returns data from the database but does not manipulate it
-        // Any manipulation logic should go in the corresponding controller file calling this function
-        return db.execute('SELECT * FROM products');
-    }
-
-    static findById(id) {
-        return db.execute('SELECT * FROM products WHERE products.id = ?', [id]);
-    }
-}
+module.exports = Product;
