@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
+app.locals.moment = require('moment');
+
 app.set('view engine', 'pug'); // pug supports this syntax out of the box
 app.set('views', 'views'); // views is the default so this isn't necessary, but just to be explicit -- find pug templates in views/
 
@@ -79,7 +81,7 @@ Product.belongsToMany(Cart, { through: CartItem });
 Order.belongsToMany(Product, { through: OrderItem });
 Product.belongsToMany(Order, { through: OrderItem }); // This isn't strictly necessary -- just for clarity
 
-var user = null;
+let currentUser;
 sequelize
     // .sync({ force: true }) // Tables recreated each time
     .sync()
@@ -96,7 +98,19 @@ sequelize
         return user;
     })
     .then(user => {
-        return user.createCart();
+        if (user) {
+            console.log('User with name: ' + user.name + " created!");
+            currentUser = user;
+        } else {
+            console.error('Failed to create user!');
+        }
+        return user.getCart();
+    })
+    .then(cart => {
+        if (!cart) {
+            return currentUser.createCart();
+        }
+        return cart;
     })
     .then(cart => {
         app.listen(3000);

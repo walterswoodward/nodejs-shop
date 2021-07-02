@@ -52,11 +52,19 @@ exports.getCart = (req, res, _index) => {
         .catch(err => console.log(err));
 }
 
-exports.getOrders = (_req, res, _index) => {
-    res.render('shop/orders', {
-        pageTitle: 'Your Orders',
-        path: '/orders'
-    })
+exports.getOrders = (req, res, _index) => {
+    req.user
+        .getOrders({ include: ['products'] }) // eager loading
+        .then(orders => {
+            res.render('shop/orders', {
+                pageTitle: 'Your Orders',
+                path: '/orders',
+                orders: orders,
+                moment: require('moment')
+            })
+        })
+        .catch(err => console.log(err));
+
 }
 
 exports.getCheckout = (_req, res, _next) => {

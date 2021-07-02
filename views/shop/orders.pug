@@ -3,5 +3,34 @@ extends ../layouts/main-layout.pug
 block styles
     link(rel='stylesheet' href='/css/bootstrap.min.css')
 block content
-    .main
-    | ORDERS
+    .main.g-4
+    h3 Orders
+    //- TODO: Add Deselect Items Feature
+    //- a(href="#") Deselect Items
+    //- input(type="checkbox", name="product")
+
+    if orders.length  > 0
+        .container
+            ul
+            each order in orders
+                li.row.dflex.border.border-secondary.rounded.m-3
+                    .details.d-flex.justify-content-around.bg-secondary.p-3
+                        #orderCreatedAt
+                            .text-small ORDER PLACED 
+                            div.d-flex.flex-col= moment(order.createdAt).format('MMMM Do, YYYY')
+                        #orderId
+                            .text-small ORDER ID
+                            div= order.id
+                    ul
+                        each product in order.products
+                            li.row.dflex.align-items-center
+                                #image.col
+                                    img(src=product.imageUrl, alt=product.title)
+                                #title.col= product.title
+                                #qty.col= "Qty: " + product.orderItem.quantity
+        hr
+        form(action="/create-order" method="POST" class="text-center")
+            button(type="submit" class="btn btn-outline-danger") Order Now!
+    else
+        h1 No Orders
+
