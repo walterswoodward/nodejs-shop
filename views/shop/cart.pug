@@ -14,12 +14,12 @@ block content
             each p in products
                 li.row.dflex
                     #image.col
-                        img(src=p.productData.imageUrl, alt=p.productData.title)
-                    #title.col= p.productData.title
-                    #qty.col= "Qty: " + p.qty
+                        img(src=p.imageUrl, alt=p.title)
+                    #title.col= p.title
+                    #qty.col= "Qty: " + p.cartItem.quantity
                     .col
                         form(action="/cart-delete-item" method="POST")
                             button.btn.btn-primary(tpye="submit") Delete
-                            input(type='hidden' name='productId' value=p.productData.id)
+                            input(type='hidden' name='productId' value=p.id)
     else
         h1 No Products in Cart
