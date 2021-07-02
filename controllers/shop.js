@@ -1,5 +1,6 @@
 const Product = require('../models/product');
 const Cart = require('../models/cart');
+const Order = require('../models/order');
 
 
 exports.getIndex = (_req, res, _next) => {
@@ -97,6 +98,35 @@ exports.postCart = (req, res, _next) => {
         .catch(err => console.log(err));
 }
 
+exports.postOrder = (req, res, next) => {
+    let cartProducts;
+    let fetchedCart;
+    req.user
+        .getCart()
+        .then(cart => {
+            fetchedCart = cart;
+            return cart.getProducts();
+        })
+        .then(products => {
+            cartProducts = products;
+            return req.user.createOrder();
+        })
+        .then(order => {
+            order.addProducts(cartProducts.map(product => {
+                product.orderItem = { quantity: product.cartItem.quantity };
+                return product;
+            }))
+        })
+        .then(_result => {
+            return fetchedCart.setProducts(null);
+           
+        })
+        .then(_result => {
+            res.redirect('/orders');
+        })
+        .catch(err => console.log(err));
+}
+
 exports.postCartDeleteProduct = (req, res, _next) => {
     const prodId = req.body.productId;
     req.user
@@ -112,6 +142,7 @@ exports.postCartDeleteProduct = (req, res, _next) => {
             res.redirect('/cart');
         })
         .catch(err =>  console.log(err));
+
     Product.findByPk(prodId, product => {
         Cart.deleteProduct(prodId, product.price);
         res.redirect('/cart');

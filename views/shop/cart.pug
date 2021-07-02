@@ -21,5 +21,8 @@ block content
                         form(action="/cart-delete-item" method="POST")
                             button.btn.btn-primary(tpye="submit") Delete
                             input(type='hidden' name='productId' value=p.id)
+        hr
+        form(action="/create-order" method="POST" class="text-center")
+            button(type="submit" class="btn btn-outline-danger") Order Now!
     else
         h1 No Products in Cart
