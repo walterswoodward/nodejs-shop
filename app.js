@@ -17,6 +17,8 @@ const Product = require('./models/product');
 const User = require('./models/user');
 const Cart = require('./models/cart');
 const CartItem = require('./models/cart-item');
+const Order = require('./models/order');
+const OrderItem = require('./models/order-item');
 
 // convert express requests to json
 app.use(express.json());
@@ -49,15 +51,35 @@ app.use(shopRoutes);
 // Handle 404
 app.use(get404);
 
+// User <=> Product Association: One to Many
 User.hasMany(Product);
+// constraints: true ensures the referential integrity of userId in products corresponding to an existing user in the users table
+// onDelete: 'CASCADE' means that if a user is deleted, then all products belonging to that user will also be deleted
 Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
 
+// Models: User, Product, Cart, Order AND
+// Two composite unique key tables: CartItem, OrderItem
+// // These tables mainly store the Many to Many relationships between two tables with a Many to Many association
+// // For CartItem: cartId <=> productId + quantity
+// // For OrderItem: orderId <=> productId + quantity
+
+// User <=> Cart Association: One to One
 User.hasOne(Cart);
 Cart.belongsTo(User); // This isn't strictly necessary, but can be added for additional clarity -- it is implied by User.hasOne(Cart)
 
+// User <=> Orders Association: One to Many
+User.hasMany(Order); // A user can have multiple orders of course
+Order.belongsTo(User); // This makes sense, since any given Order will only belong to ONE user
+
+// Cart <=> Product Association: Many to Many
 Cart.belongsToMany(Product, { through: CartItem });
 Product.belongsToMany(Cart, { through: CartItem });
 
+// Order <=> Product Association: Many to Many
+Order.belongsToMany(Product, { through: OrderItem });
+Product.belongsToMany(Order, { through: OrderItem }); // This isn't strictly necessary -- just for clarity
+
+var user = null;
 sequelize
     // .sync({ force: true }) // Tables recreated each time
     .sync()
@@ -66,7 +88,7 @@ sequelize
     })
     .then(user => {
         if (!user) {
-            User.create({
+            return User.create({
                 name: 'Walter',
                 email: 'walter@nodejs.com'
             });
