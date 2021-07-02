@@ -33,7 +33,9 @@ exports.getEditProduct = (req, res) => {
     }
 
 exports.getProducts = (req, res, next) => {
-    Product.findAll().then(products => 
+    req.user
+        .getProducts()
+        .then(products => 
         res.render('admin/products', {
             prods: products,
             pageTitle: 'Admin Products',
@@ -89,6 +91,7 @@ exports.postDeleteProduct = (req, res, next) => {
     })
     .then(result => {
         console.log('Product Destroyed!');
+        res.redirect('/admin/products');
     })
     .catch(err => console.log(err));
     res.redirect('/admin/products');
