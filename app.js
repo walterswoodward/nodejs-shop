@@ -15,6 +15,8 @@ const sequelize = require('./util/database');
 
 const Product = require('./models/product');
 const User = require('./models/user');
+const Cart = require('./models/cart');
+const CartItem = require('./models/cart-item');
 
 // convert express requests to json
 app.use(express.json());
@@ -47,12 +49,18 @@ app.use(shopRoutes);
 // Handle 404
 app.use(get404);
 
-Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
 User.hasMany(Product);
+Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
+
+User.hasOne(Cart);
+Cart.belongsTo(User); // This isn't strictly necessary, but can be added for additional clarity -- it is implied by User.hasOne(Cart)
+
+Cart.belongsToMany(Product, { through: CartItem });
+Product.belongsToMany(Cart, { through: CartItem });
 
 sequelize
-    // .sync({ force: true }) // Tables recreated each time
-    .sync()
+    .sync({ force: true }) // Tables recreated each time
+    // .sync()
     .then(result => {
         return User.findByPk(1);
     })
