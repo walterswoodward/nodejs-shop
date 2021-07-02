@@ -12,20 +12,24 @@ const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 const { get404 } = require('./controllers/error');
 const sequelize = require('./util/database');
+
 const Product = require('./models/product');
 const User = require('./models/user');
 
 // convert express requests to json
 app.use(express.json());
 app.use(express.urlencoded({
-  extended: true
+    extended: true
 }));
 
 // Note that this anonymous function was "registered" as middleware for all incoming request, 
 // but is not called until a request is made to the server (started previously with `npm start`)
 app.use((req, res, next) => {
-    User.findByPk(1) 
-        .then(user => {req.user = user; next();})
+    User.findByPk(1)
+        .then(user => {
+            req.user = user;
+            next();
+        })
         .catch(err => console.log(err));
 });
 
@@ -43,7 +47,7 @@ app.use(shopRoutes);
 // Handle 404
 app.use(get404);
 
-Product.belongsTo(User, {constraints: true, onDelete: 'CASCADE'});
+Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
 User.hasMany(Product);
 
 sequelize
@@ -62,7 +66,6 @@ sequelize
         return user;
     })
     .then(user => {
-        // console.log(user);
         app.listen(3000);
     })
     .catch(err => console.log(err));

@@ -43,12 +43,14 @@ exports.getProducts = (req, res, next) => {
 
 exports.postAddProduct = (req, res, next) => {
     const { title, imageUrl, price, description } = req.body;
-    Product.create({
-        title: title,
-        price: price,
-        imageUrl: imageUrl,
-        description: description
-    })
+
+    // This syntax works only b/c of the associations established between products and users in app.js
+    req.user.createProduct({
+            title: title,
+            price: price,
+            imageUrl: imageUrl,
+            description: description
+        })
         .then(result => {
             console.log('Created Product!');
             res.redirect('/admin/products');
