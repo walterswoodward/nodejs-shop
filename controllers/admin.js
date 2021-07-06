@@ -8,29 +8,27 @@ exports.getAddProduct = (req, res) => {
     });
 }
 
-// exports.getEditProduct = (req, res) => {
-//     const editMode = req.query.edit; // this is set on shop/index.pug link
-//     if (!editMode) { // this just demonstrates how you can use query params to pass additional information -- realistically this will nevery happen
-//         return res.redirect('/');
-//     }
-//     const prodId = req.params.productId;
-//     req.user
-//         .getProducts({where: {id: prodId}})
-//         .then(products => {
-//             const product = products[0];
-//             if (!product) {
-//                 // TODO: Replace this with error message
-//                 return res.redirect('/');
-//             }
-//             res.render('admin/edit-product', {
-//                 pageTitle: 'Edit Product',
-//                 path: '/admin/edit-product',
-//                 editing: editMode,
-//                 product: product
-//             });
-//         })
-//         .catch(err => console.log(err));
-//     }
+exports.getEditProduct = (req, res) => {
+    const editMode = req.query.edit; // this is set on shop/index.pug link
+    if (!editMode) { // this just demonstrates how you can use query params to pass additional information -- realistically this will nevery happen
+        return res.redirect('/');
+    }
+    const prodId = req.params.productId;
+    Product.findById(prodId)
+        .then(product => {
+            if (!product) {
+                // TODO: Replace this with error message
+                return res.redirect('/');
+            }
+            res.render('admin/edit-product', {
+                pageTitle: 'Edit Product',
+                path: '/admin/edit-product',
+                editing: editMode,
+                product: product
+            });
+        })
+        .catch(err => console.log(err));
+    }
 
 exports.getProducts = (req, res, next) => {
     Product
@@ -59,25 +57,17 @@ exports.postAddProduct = (req, res, next) => {
         .catch(err => console.log(err));
 }
 
-// exports.postEditProduct = (req, res, next) => {
-//     const prodId = req.body.productId;
-//     const { title, imageUrl, price, description } = req.body;
-//     Product.findByPk(prodId)
-//         .then(product => {
-//             product.title = title;
-//             product.imageUrl = imageUrl;
-//             product.price = price;
-//             product.description = description;
-//             // You may be tempted to chain a then and catch block to this method but in order to avoid the same messiness of nested callbacks
-//             // instead we can return this call to the save method (which returns a Promise) and handle to the results in the next then block
-//             return product.save();
-//         })
-//         .then(result => {
-//             console.log("Product Updated!");
-//             res.redirect('/admin/products');
-//         })
-//         .catch(err => console.log(err));
-// }
+exports.postEditProduct = (req, res, next) => {
+    const prodId = req.body.productId;
+    const { title, imageUrl, price, description, _id } = req.body;
+    const product = new Product(title, price, description, imageUrl, prodId);
+    product.save()
+        .then(result => {
+            console.log("Product Updated!");
+            res.redirect('/admin/products');
+        })
+        .catch(err => console.log(err));
+}
 
 // exports.postDeleteProduct = (req, res, next) => {
 //     const prodId = req.body.productId;
