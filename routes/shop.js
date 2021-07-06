@@ -9,7 +9,7 @@ router.get('/', getIndex);
 router.get('/products', getProducts);
 
 // note: all dynamic segments need to be beneath all common specific routes
-// router.get('/products/:productId', getProduct);
+router.get('/products/:productId', getProduct);
 
 // router.get('/cart', getCart);
 

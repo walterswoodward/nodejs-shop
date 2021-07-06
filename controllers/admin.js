@@ -32,18 +32,18 @@ exports.getAddProduct = (req, res) => {
 //         .catch(err => console.log(err));
 //     }
 
-// exports.getProducts = (req, res, next) => {
-//     req.user
-//         .getProducts()
-//         .then(products => 
-//         res.render('admin/products', {
-//             prods: products,
-//             pageTitle: 'Admin Products',
-//             path: '/admin/products',
-//             hasProducts: products.length > 0
-//         })
-//     ).catch(err => console.log(err));
-// }
+exports.getProducts = (req, res, next) => {
+    Product
+        .fetchAll()
+        .then(products => 
+        res.render('admin/products', {
+            prods: products,
+            pageTitle: 'Admin Products',
+            path: '/admin/products',
+            hasProducts: products.length > 0
+        })
+    ).catch(err => console.log(err));
+}
 
 exports.postAddProduct = (req, res, next) => {
     const { title, imageUrl, price, description } = req.body;

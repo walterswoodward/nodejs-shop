@@ -16,7 +16,7 @@ exports.getIndex = (_req, res, _next) => {
 
 exports.getProduct = (req, res, _next) => {
     const prodId = req.params.productId;
-    Product.findByPk(prodId) // alternatively Product.findByAll({where: {id: prodId}...}) could be used -- see sequelize docs
+    Product.findById(prodId)
         .then((product) => res.render('shop/product-detail', {
             product: product,
             pageTitle: product.title,
