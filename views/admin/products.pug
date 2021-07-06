@@ -15,10 +15,10 @@ block content
                                 div.product__price.text-medium $#{product.price}
                                 small.card-text.product__description #{product.description}
                                 hr
-                                a.btn.btn-success(href='/admin/edit-product/' + product.id + '?edit=true') Edit
+                                a.btn.btn-success(href='/admin/edit-product/' + product._id + '?edit=true') Edit
                                 form(action="/admin/delete-product" method="POST")
                                     button.btn.btn-danger(href='#') Delete
-                                    input(type='hidden' name='productId' value=product.id)
+                                    input(type='hidden' name='productId' value=product._id)
                                 include ../includes/add-to-cart.pug
         else
             h1 No Products

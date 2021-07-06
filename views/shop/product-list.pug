@@ -15,7 +15,7 @@ block content
                                 h6.product__price $#{product.price}
                                 p.card-text.product__description #{product.description}
                                 hr
-                                a.btn.btn-warning(href='/products/' + product.id) Details
+                                a.btn.btn-warning(href='/products/' + product._id) Details
                                 include ../includes/add-to-cart.pug
         else
             h1 No Products
