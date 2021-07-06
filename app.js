@@ -11,10 +11,10 @@ app.locals.moment = require('moment');
 app.set('view engine', 'pug'); // pug supports this syntax out of the box
 app.set('views', 'views'); // views is the default so this isn't necessary, but just to be explicit -- find pug templates in views/
 
-// const adminRoutes = require('./routes/admin');
-// const shopRoutes = require('./routes/shop');
-// const { get404 } = require('./controllers/error');
-const mongoConnect = require('./util/database');
+const adminRoutes = require('./routes/admin');
+const shopRoutes = require('./routes/shop');
+const { get404 } = require('./controllers/error');
+const { mongoConnect } = require('./util/database');
 
 // const User = require('./models/user');
 
@@ -34,6 +34,7 @@ app.use((req, res, next) => {
     //         next();
     //     })
     //     .catch(err => console.log(err));
+    next();
 });
 
 // express.static(root, [options]) -- grants access to these dependencies
@@ -43,15 +44,13 @@ app.use('/css', express.static(path.join(__dirname, "node_modules/bootstrap/dist
 app.use('/js', express.static(path.join(__dirname, "node_modules/bootstrap/dist/js")));
 
 // outsource routes
-// app.use('/admin', adminRoutes);
-// app.use('/admin', adminRoutes);
-// app.use(shopRoutes);
+app.use('/admin', adminRoutes);
+app.use(shopRoutes);
 
 // // Handle 404
-// app.use(get404);
+app.use(get404);
 
-mongoConnect((client) => {
-    console.log(client);
+mongoConnect(() => {
     app.listen(3000);
 });
 
