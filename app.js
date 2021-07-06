@@ -28,13 +28,12 @@ app.use(express.urlencoded({
 // Note that this anonymous function was "registered" as middleware for all incoming request, 
 // but is not called until a request is made to the server (started previously with `npm start`)
 app.use((req, res, next) => {
-    // User.findByPk(1)
-    //     .then(user => {
-    //         req.user = user;
-    //         next();
-    //     })
-    //     .catch(err => console.log(err));
-    next();
+    User.findById('60e4b20496479dd9a4efc1ab')
+        .then(user => {
+            req.user = user;
+            next();
+        })
+        .catch(err => console.log(err));
 });
 
 // express.static(root, [options]) -- grants access to these dependencies
